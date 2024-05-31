@@ -1,0 +1,45 @@
+# Prompt the user for a filename
+filename = input("Enter the filename: ")
+
+# Attempt to read the file into a list of lines
+if not filename:
+    print("No filename provided.")
+    exit()
+
+file = open(filename, 'r')
+lines = file.readlines()
+file.close()
+
+# Check if the file was successfully opened
+if not lines:
+    print(f"File '{filename}' not found or empty.")
+    exit()
+
+# Remove any trailing newlines from each line
+lines = [line.rstrip('\n') for line in lines]
+
+# Get the number of lines in the file
+num_lines = len(lines)
+print(f"The file has {num_lines} lines.")
+
+while True:
+    # Prompt the user for a line number
+    line_number_input = input(f"Enter a line number (1-{num_lines}) or 0 to quit: ")
+    
+    # Check if the input is a valid integer
+    if not line_number_input.isdigit():
+        print("Please enter a valid number.")
+        continue
+
+    line_number = int(line_number_input)
+
+    # Check if the user wants to quit
+    if line_number == 0:
+        print("Exiting the program.")
+        break
+
+    # Check if the line number is within the valid range
+    if 1 <= line_number <= num_lines:
+        print(lines[line_number - 1])
+    else:
+        print(f"Invalid line number. Please enter a number between 1 and {num_lines}.")
